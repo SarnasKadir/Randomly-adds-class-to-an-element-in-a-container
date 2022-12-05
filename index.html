@@ -1,1 +1,95 @@
 
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>.activeClass{background-color:red; color:white; padding:1mm;}</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+	var count = 0;
+	function myInterval(){
+
+		// counts the attempts
+		$("#attempt").html(count);	count++;
+
+
+		// add classes the element 
+		var find_element = $("ul").find("li");
+		var elements = find_element.length;
+		var random = Math.floor((Math.random() * elements));   
+
+
+		if ($(find_element.eq(random)).hasClass("activeClass")) {		  
+		$("#repeatedElement").append("element id: ", random, "<br>");
+		}else{
+		find_element.eq(random).addClass("activeClass");
+		}
+
+
+		// if all element gets class than stop the interval
+		if($('li').length === $('.activeClass').length)   {
+			// clears the interval
+			clearInterval(interval);
+		}
+
+
+		}interval =  (myInterval);
+
+
+		// BTN starts the interval
+		$("#start").click(function(){
+
+		// remove all classes
+		$("ul li").removeClass("activeClass");
+
+		// clears the interval
+		clearInterval(interval);
+
+		// resets the counts in the attempt
+		count = 0;
+
+		// sets the interval
+		interval = setInterval(myInterval,10);
+		$("#repeatedElement").empty();
+
+	});
+});
+</script>
+
+</head>
+<body>
+<p>Randomly adds class to an element in a container</p>
+<p>If the element already has got the class than the function tries again randomly to select another element.</p>
+<p>The function also displays the counts of the attempted times and shows the repeated selected element. </p>
+
+ 
+
+<button id="start">start</button>
+
+ <ul>
+    <li>0</li>
+	<li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+   
+</ul>
+<h1>Attempt: <span id="attempt"></span>  </h1> 
+<p><b>Repeated attempt on the element</b><br>
+<span id="repeatedElement"></span>
+</p>
+ 
+ 
+
+</body>
+</html>
